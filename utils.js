@@ -1,6 +1,4 @@
 const { resolve } = require('path')
-const axios = require('axios')
-
 
 /**
  * 判断是否为有效链接

@@ -2,6 +2,13 @@ const { pathExistsSync, statSync } = require('fs-extra')
 const inquirer = require('inquirer')
 const { getAbsolutePath } = require('./utils')
 
+
+/**
+ * 输入token
+ *
+ * @param {*} token
+ * @return {*} 
+ */
 async function promptToken(token) {
   const promptOptions = []
   if (!token) {
@@ -15,6 +22,13 @@ async function promptToken(token) {
   return answers
 }
 
+
+/**
+ * 输入导入文件路径
+ *
+ * @param {*} file
+ * @return {*} 
+ */
 async function promptFileInfo(file) {
   const promptOptions = []
   if (!file) {

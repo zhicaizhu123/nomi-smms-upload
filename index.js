@@ -1,18 +1,25 @@
-const { resolve, extname, basename } = require('path')
+const { resolve, basename } = require('path')
 const { createReadStream } = require('fs');
-const { PassThrough } = require("stream");
 const { pathExistsSync, statSync, writeFileSync } = require('fs-extra')
 const colors = require('colors')
 const fg = require('fast-glob');
 const ora = require('ora')
 const spinner = ora('loading')
 const { getAbsolutePath } = require('./utils')
-const { promptToken, promptFileType, promptFileInfo, promptRemoteInfo } = require('./prompt');
+const { promptToken, promptFileInfo } = require('./prompt');
 const { uploadImage } = require('./api');
 
+// 默认配置文件名称
 const DEFAULT_CONFIG_FILE = 'nomi.smms.config.js'
+// 默认上传成功后本地生成的文件名称
 const DEFAULT_UPLOADED_FILE = 'nomi.smms.uploaded.json'
 
+
+/**
+ * 调试打印日志
+ *
+ * @param {*} args 参数列表
+ */
 function verbose(...args) {
   process.env.NOMI_SMMS_UPLOAD_DEBUG && console.log(colors.blue('debug：'), ...args)
 }
@@ -79,6 +86,13 @@ async function getUploadFileList(options) {
   return fileList
 }
 
+
+/**
+ * 更具配置文件设置options
+ *
+ * @param {*} options  命令行参数
+ * @return {*} 
+ */
 function setOptionsByConfigFile(options) {
   const customConfigFile = getAbsolutePath(options.config || DEFAULT_CONFIG_FILE)
   if (pathExistsSync(customConfigFile)) {
@@ -99,7 +113,7 @@ function setOptionsByConfigFile(options) {
 
 /**
  * 初始化
- * @param {*} api 获取 oss 配置信息接口
+ * 
  * @param {*} options 参数配置
  */
 async function init(options) {
@@ -107,7 +121,9 @@ async function init(options) {
   if (!!options.debug) {
     process.env.NOMI_SMMS_UPLOAD_DEBUG = true
   }
+  // 如果没有token则需要提示手动输入
   const tokenAnswers = await promptToken(options.token)
+  // 如果没有指定上传文件路径，则提示手动输入
   const fileInfoAnswers = await promptFileInfo(options.file)
   Object.assign(config, tokenAnswers, fileInfoAnswers);
   verbose('CLI config', config)
@@ -135,15 +151,14 @@ async function smmsUpload(uploadFileList, token) {
 
 /**
  * 上传
+ * 
  * @param {*} options 命令行参数
  */
 async function upload(options) {
   try {
     // 获取要上传的文件数据
     const uploadFileList = await getUploadFileList(options)
-
     spinner.start('uploading files....')
-    // const res = await ossUpload(client, uploadFileList)
     const res = await smmsUpload(uploadFileList, options.token)
     spinner.succeed('uploaded success, more upload info please see ' + colors.blue(process.cwd() + '/' + DEFAULT_UPLOADED_FILE))
     
