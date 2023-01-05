@@ -1,6 +1,6 @@
 {
   "name": "nomi-smms-upload",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "upload cli with smms",
   "main": "index.js",
   "bin": {
@@ -17,5 +17,23 @@
     "inquirer": "^8.2.5",
     "ora": "^5.4.0"
   },
-  "author": "zhicaizhu123 <zhicaizhu123@126.com>"
+  "author": "zhicaizhu123 <zhicaizhu123@126.com>",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zhicaizhu123/nomi-smms-upload.git"
+  },
+  "keywords": [
+    "upload",
+    "CLI",
+    "SM.MS",
+    "图床"
+  ],
+  "bugs": {
+    "url": "https://github.com/zhicaizhu123/nomi-smms-upload/issues"
+  },
+  "homepage": "https://github.com/zhicaizhu123/nomi-smms-upload#readme"
 }
