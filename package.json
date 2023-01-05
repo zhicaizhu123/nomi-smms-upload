@@ -1,0 +1,21 @@
+{
+  "name": "nomi-smms-upload",
+  "version": "1.0.0",
+  "description": "upload cli with smms",
+  "main": "index.js",
+  "bin": {
+    "nomi-smms-upload": "cli.js"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.2.1",
+    "colors": "^1.4.0",
+    "commander": "^9.4.1",
+    "fast-glob": "^3.2.12",
+    "form-data": "^4.0.0",
+    "fs-extra": "^11.1.0",
+    "inquirer": "^8.2.5",
+    "ora": "^5.4.0"
+  },
+  "author": "zhicaizhu123 <zhicaizhu123@126.com>"
+}
